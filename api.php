@@ -17,7 +17,7 @@ switch ($action) {
         echo json_encode(["status" => "success", "total_clientes" => $clientes]);
         break;
 
-    // --- CRUD CHOFERES (Dev 2) ---
+    // --- CRUD CHOFERES  ---
     case 'choferes':
         if ($method === 'GET') {
             $result = $db->query("SELECT * FROM choferes");
@@ -33,7 +33,7 @@ switch ($action) {
         }
         break;
 
-    // --- CRUD UNIDADES (Dev 2) ---
+    // --- CRUD UNIDADES  ---
     case 'unidades':
         if ($method === 'GET') {
             $result = $db->query("SELECT * FROM unidades");
@@ -50,7 +50,7 @@ switch ($action) {
         }
         break;
 
-    // --- CRUD CLIENTES (Dev 3) ---
+    // --- CRUD CLIENTES  ---
     case 'clientes':
         if ($method === 'GET') {
             $result = $db->query("SELECT * FROM clientes");
