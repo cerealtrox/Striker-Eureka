@@ -1,102 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fletes2</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Fletes</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-    <link rel="stylesheet" href="estilo.css">
+    <link rel="stylesheet" href="general.css">
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="app.js"></script>
 </head>
+<body x-data="contexto()" x-init="principal_fletes()">
+
     <header>
-        <h1>Sistema de Gestión de Fletes</h1>
+        <h1>Fletes</h1>
         <nav>
-            <a href="#" @click.prevent="setView('dashboard')">Dashboard</a>
-            <a href="#" @click.prevent="setView('fletes')">Fletes</a>
-            <a href="#" @click.prevent="setView('clientes')">Clientes</a>
-            <a href="#" @click.prevent="setView('flota')">Flota (Choferes/Unidades)</a>
+            <button @click="vista = 'Inicio'">Dashboard</button>
+            <button @click="vista = 'Choferes'">Choferes</button>
+            <button @click="vista = 'Unidades'">Unidades</button>
+            <button @click="vista = 'Fletes'">Nuevo Flete</button>
         </nav>
     </header>
 
     <main>
-        <!-- Dashboard -->
-        <template x-if="currentView === 'dashboard'">
-            <section>
-                <h2>Panel de Control</h2>
-                <p>Total de Clientes Registrados: <strong x-text="stats.total_clientes"></strong></p>
-                <button @click="loadDashboardStats()">Actualizar Datos</button>
-            </section>
-        </template>
+        <section x-show="vista === 'Inicio'">
+            <h2>Dashboard Principal</h2>
+            <p>Fletes en Tránsito</p>
+        </section>
+        
+        <section x-show="vista === 'Choferes'">
+            <h2>Catálogo de Choferes</h2>
+        </section>
 
-        <!-- Clientes -->
-        <template x-if="currentView === 'clientes'">
-            <section>
-                <h2>Gestión de Clientes</h2>
-                <form @submit.prevent="saveCliente">
-                    <input type="text" x-model="formCliente.nombre" placeholder="Nombre del Cliente" required>
-                    <input type="text" x-model="formCliente.telefono" placeholder="Teléfono" required>
-                    <button type="submit">Guardar Cliente</button>
-                </form>
-                <table>
-                    <thead><tr><th>ID</th><th>Nombre</th><th>Teléfono</th><th>Saldo Pendiente</th></tr></thead>
-                    <tbody>
-                        <template x-for="c in clientes" :key="c.id">
-                            <tr>
-                                <td x-text="c.id"></td><td x-text="c.nombre"></td>
-                                <td x-text="c.telefono"></td><td x-text="'$' + c.saldo_pendiente"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </section>
-        </template>
+        <section x-show="vista === 'Unidades'">
+            <h2>Catálogo de Unidades</h2>
+        </section>
 
-        <!-- Flota (Choferes y Unidades) -->
-        <template x-if="currentView === 'flota'">
-            <section>
-                <h2>Gestión de Flota</h2>
-                
-                <h3>Choferes</h3>
-                <form @submit.prevent="saveChofer">
-                    <input type="text" x-model="formChofer.nombre" placeholder="Nombre" required>
-                    <input type="text" x-model="formChofer.licencia" placeholder="Licencia" required>
-                    <button type="submit">Agregar Chofer</button>
-                </form>
-                <table>
-                    <thead><tr><th>ID</th><th>Nombre</th><th>Licencia</th><th>Estatus</th></tr></thead>
-                    <tbody>
-                        <template x-for="ch in choferes" :key="ch.id">
-                            <tr>
-                                <td x-text="ch.id"></td><td x-text="ch.nombre"></td>
-                                <td x-text="ch.licencia"></td><td x-text="ch.estatus"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-
-                <hr>
-
-                <h3>Unidades</h3>
-                <form @submit.prevent="saveUnidad">
-                    <input type="text" x-model="formUnidad.placas" placeholder="Placas" required>
-                    <input type="text" x-model="formUnidad.modelo" placeholder="Modelo" required>
-                    <input type="number" step="0.1" x-model="formUnidad.capacidad" placeholder="Capacidad (Ton)" required>
-                    <button type="submit">Agregar Unidad</button>
-                </form>
-                <table>
-                    <thead><tr><th>ID</th><th>Placas</th><th>Modelo</th><th>Capacidad</th><th>Estatus</th></tr></thead>
-                    <tbody>
-                        <template x-for="u in unidades" :key="u.id">
-                            <tr>
-                                <td x-text="u.id"></td><td x-text="u.placas"></td>
-                                <td x-text="u.modelo"></td><td x-text="u.capacidad_toneladas + ' Ton'"></td>
-                                <td x-text="u.estatus"></td>
-                            </tr>
-                        </template>
-                    </tbody>
-                </table>
-            </section>
-        </template>
+        <section x-show="vista === 'Fletes'">
+            <h2>Registro de Fletes</h2>
+        </section>
     </main>
+
+    <script src="app.js"></script>
+</body>
 </html>
