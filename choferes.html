@@ -1,0 +1,78 @@
+<section>
+    <h2>choferes</h2>
+
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>clave</th>
+                    <th>nombre</th>
+                    <th>apellido</th>
+                    <th>estado</th>
+                    <th>licencia</th>
+                    <th>acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template x-for="chofer in choferes" :key="chofer.clave">
+                    <tr>
+                        <td x-text="chofer.clave"></td>
+                        <td x-text="chofer.nombre"></td>
+                        <td x-text="chofer.apellido"></td>
+                        <td x-text="chofer.estado"></td>
+                        <td x-text="chofer.licencia"></td>
+                        <td>
+                            <button @click="editar('choferes', chofer)">
+                                editar
+                            </button>
+
+                            <button @click="eliminar('choferes', chofer.clave)">
+                                eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <p x-show="choferes.length == 0">no hay choferes registrados</p>
+
+    <h3 x-text="editando.choferes === null ? 'agregar chofer' : 'editar chofer'"></h3>
+
+    <form class="formulario" @submit.prevent="guardar('choferes')">
+        <label>
+            clave
+            <input
+                required
+                x-model.trim="nuevo_chofer.clave"
+                :disabled="editando.choferes !== null"
+            >
+        </label>
+
+        <label>
+            nombre
+            <input required x-model.trim="nuevo_chofer.nombre">
+        </label>
+
+        <label>
+            apellido
+            <input x-model.trim="nuevo_chofer.apellido">
+        </label>
+
+        <label>
+            estado
+            <select x-model="nuevo_chofer.estado">
+                <option value="activo">activo</option>
+                <option value="inactivo">inactivo</option>
+            </select>
+        </label>
+
+        <button type="submit" :disabled="guardando">guardar chofer</button>
+
+        <button type="button" @click="cancelar('choferes')">
+            cancelar
+        </button>
+    </form>
+</section>
