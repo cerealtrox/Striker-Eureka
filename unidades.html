@@ -1,0 +1,84 @@
+<section>
+    <h2>unidades</h2>
+
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>numero</th>
+                    <th>marca</th>
+                    <th>modelo</th>
+                    <th>placa</th>
+                    <th>estado</th>
+                    <th>acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template x-for="unidad in unidades" :key="unidad.numero">
+                    <tr>
+                        <td x-text="unidad.numero"></td>
+                        <td x-text="unidad.marca"></td>
+                        <td x-text="unidad.modelo"></td>
+                        <td x-text="unidad.placa"></td>
+                        <td x-text="unidad.estado"></td>
+                        <td>
+                            <button @click="editar('unidades', unidad)">
+                                editar
+                            </button>
+
+                            <button @click="eliminar('unidades', unidad.numero)">
+                                eliminar
+                            </button>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <p x-show="unidades.length == 0">no hay unidades registradas</p>
+
+    <h3 x-text="editando.unidades === null ? 'agregar unidad' : 'editar unidad'"></h3>
+
+    <form class="formulario" @submit.prevent="guardar('unidades')">
+        <label>
+            numero
+            <input
+                required
+                x-model.trim="nueva_unidad.numero"
+                :disabled="editando.unidades !== null"
+            >
+        </label>
+
+        <label>
+            marca
+            <input required x-model.trim="nueva_unidad.marca">
+        </label>
+
+        <label>
+            modelo
+            <input x-model.trim="nueva_unidad.modelo">
+        </label>
+
+        <label>
+            placa
+            <input x-model.trim="nueva_unidad.placa">
+        </label>
+
+        <label>
+            estado
+            <select x-model="nueva_unidad.estado">
+                <option value="disponible">disponible</option>
+                <option value="en ruta">en ruta</option>
+                <option value="mantenimiento">mantenimiento</option>
+            </select>
+        </label>
+
+        <button type="submit" :disabled="guardando">guardar unidad</button>
+
+        <button type="button" @click="cancelar('unidades')">
+            cancelar
+        </button>
+    </form>
+</section>
