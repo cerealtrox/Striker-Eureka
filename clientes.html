@@ -1,0 +1,67 @@
+<section>
+    <h2>clientes</h2>
+
+    <div class="tabla">
+        <table>
+            <thead>
+                <tr>
+                    <th>nombre</th>
+                    <th>telefono</th>
+                    <th>correo</th>
+                    <th>acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <template x-for="cliente in clientes" :key="cliente.id">
+                    <tr>
+                        <td x-text="cliente.nombre"></td>
+                        <td x-text="cliente.telefono"></td>
+                        <td x-text="cliente.correo"></td>
+                        <td>
+                            <button @click="editar('clientes', cliente)">
+                                editar
+                            </button>
+
+                            <button @click="eliminar('clientes', cliente.id)">
+                                eliminar
+                            </button>
+
+                            <a x-link :href="'/clientes/' + cliente.id">
+                                ver detalle
+                            </a>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+    <p x-show="clientes.length == 0">no hay clientes registrados</p>
+
+    <h3 x-text="editando.clientes === null ? 'agregar cliente' : 'editar cliente'"></h3>
+
+    <form class="formulario" @submit.prevent="guardar('clientes')">
+        <label>
+            nombre
+            <input required x-model.trim="nuevo_cliente.nombre">
+        </label>
+
+       
+      <label>
+            telefono
+            <input type="tel" x-model.trim="nuevo_cliente.telefono">
+        </label>
+
+        <label>
+            correo
+            <input type="email" x-model.trim="nuevo_cliente.correo">
+        </label>
+
+        <button type="submit" :disabled="guardando">guardar cliente</button>
+
+        <button type="button" @click="cancelar('clientes')">
+            cancelar
+        </button>
+    </form>
+</section>
