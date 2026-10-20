@@ -1,0 +1,89 @@
+<section>
+    <h2>nuevo flete</h2>
+
+    <a x-link href="/fletes">volver a fletes</a>
+
+    <form class="formulario" @submit.prevent="guardar('fletes')">
+        <label>
+            fecha
+            <input type="date" required x-model="nuevo_flete.fecha">
+        </label>
+
+        <label>
+            origen
+            <input required x-model.trim="nuevo_flete.origen">
+        </label>
+
+        <label>
+            destino
+            <input required x-model.trim="nuevo_flete.destino">
+        </label>
+
+        <label>
+            tarifa
+            <input
+                type="number"
+                min="0"
+                step="0.01"
+                required
+                x-model.number="nuevo_flete.tarifa"
+            >
+        </label>
+
+        <label>
+            cliente
+            <select required x-model.number="nuevo_flete.cliente_id">
+                <option value="">selecciona un cliente</option>
+
+                <template x-for="cliente in clientes" :key="cliente.id">
+                    <option
+                        :value="cliente.id"
+                        x-text="cliente.nombre"
+                    ></option>
+                </template>
+            </select>
+        </label>
+
+        <label>
+            chofer
+            <select required x-model="nuevo_flete.chofer_clave">
+                <option value="">selecciona un chofer</option>
+
+                <template
+                    x-for="chofer in choferes.filter(c => c.estado == 'activo')"
+                    :key="chofer.clave"
+                >
+                    <option
+                        :value="chofer.clave"
+                        x-text="chofer.nombre + ' ' + chofer.apellido"
+                    ></option>
+                </template>
+            </select>
+        </label>
+
+        <label>
+            unidad
+            <select required x-model="nuevo_flete.unidad_numero">
+                <option value="">selecciona una unidad</option>
+
+                <template
+                    x-for="unidad in unidades.filter(u => u.estado == 'disponible')"
+                    :key="unidad.numero"
+                >
+                    <option
+                        :value="unidad.numero"
+                        x-text="unidad.numero + ' - ' + unidad.marca"
+                    ></option>
+                </template>
+            </select>
+        </label>
+
+        <button type="submit" :disabled="guardando">
+            crear flete
+        </button>
+
+        <button type="button" @click="cancelar('fletes')">
+            limpiar formulario
+        </button>
+    </form>
+</section>
