@@ -27,13 +27,18 @@
 				<template x-route="/">
 					<p>Hola Soy el Index</p>
 				</template>
+
 				<template x-route="/unidades" template="/unidades.html">
 				</template>
-				<?php include("./inicio.html"); ?>
-				<?php include("./unidades.html"); ?>
-				<?php include("./nuevaunidad.html"); ?>
-				<?php include("./choferes.html"); ?>
-				<?php include("./nuevo_flete.html"); ?>
+
+				<template x-route="/nuevaunidad" template="/nuevaunidad.html">
+				</template>
+
+				<template x-route="/choferes" template="/choferes.html">
+				</template>
+
+				<template x-route="/nuevo_flete" template="/nuevo_flete.html">
+				</template>
 			</main>
 		</div>
 </body>
