@@ -22,7 +22,6 @@
 			</header>
 
 			<main>
-				<?php
 				<?php include("./inicio.html"); ?>
 				<?php include("./unidades.html"); ?>
 				<?php include("./nuevaunidad.html"); ?>
