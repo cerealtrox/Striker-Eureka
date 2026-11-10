@@ -15,9 +15,10 @@
 				<h1>Fletes.com</h1>
 				<nav>
 					<button @click="vista = 'Inicio'">Inicio</button>
-					<button @click="vista = 'Unidades'">Unidades</button>
-					<button @click="vista = 'Choferes'">Choferes</button>
-					<button @click="vista = 'Nuevo Flete'">Nuevo Flete</button>
+					<button @click="vista = 'unidades'">Unidades</button>
+					<button @click="vista = 'nuevaunidad'">Nueva Unidad</button>
+					<button @click="vista = 'choferes'">Choferes</button>
+					<button @click="vista = 'nuevo_flete'">Nuevo Flete</button>
 				</nav>
 			</header>
 
@@ -25,7 +26,6 @@
 				<?php include("./inicio.html"); ?>
 				<?php include("./unidades.html"); ?>
 				<?php include("./nuevaunidad.html"); ?>
-				<?php include("./nuevochofer.html"); ?>
 				<?php include("./choferes.html"); ?>
 				<?php include("./nuevo_flete.html"); ?>
 			</main>
