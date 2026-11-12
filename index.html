@@ -35,7 +35,6 @@
 
 			<main>
 				<template x-route="/">
-					<p>Hola Soy el Index</p>
 				</template>
 
 				<template x-route="/unidades" template="/unidades.html">
@@ -51,5 +50,106 @@
 				</template>
 			</main>
 		</div>
+
+
+		<h3>Fletes Pendientes</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Origen</th>
+					<th>Destino</th>
+					<th>Chofer</th>
+					<th>Unidad</th>
+					<th>Cliente</th>
+					<th>Costo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template x-for="f in fletes.filter(item => item.estatus === 'Pendiente')">
+					<tr>
+						<td x-text="f.origen"></td>
+						<td x-text="f.destino"></td>
+						<td x-text="obtener_nombre_chofer(f.chofer)"></td>
+						<td x-text="obtener_info_unidad(f.unidad)"></td>
+						<td x-text="formato_dinero(f.tarifa)"></td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+		<h3>Fletes en Tránsito</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Origen</th>
+					<th>Destino</th>
+					<th>Chofer</th>
+					<th>Unidad</th>
+					<th>Cliente</th>
+					<th>Costo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template x-for="f in fletes.filter(item => item.estatus === 'En Tránsito')">
+					<tr>
+						<td x-text="f.origen"></td>
+						<td x-text="f.destino"></td>
+						<td x-text="obtener_nombre_chofer(f.chofer)"></td>
+						<td x-text="obtener_info_unidad(f.unidad)"></td>
+						<td x-text="formato_dinero(f.tarifa)"></td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+		<h3>Fletes Entregados</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Origen</th>
+					<th>Destino</th>
+					<th>Chofer</th>
+					<th>Unidad</th>
+					<th>Cliente</th>
+					<th>Costo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template x-for="f in fletes.filter(item => item.estatus === 'Entregado')">
+					<tr>
+						<td x-text="f.origen"></td>
+						<td x-text="f.destino"></td>
+						<td x-text="obtener_nombre_chofer(f.chofer)"></td>
+						<td x-text="obtener_info_unidad(f.unidad)"></td>
+						<td x-text="formato_dinero(f.tarifa)"></td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
+
+		<h3>Fletes Pagados</h3>
+		<table>
+			<thead>
+				<tr>
+					<th>Origen</th>
+					<th>Destino</th>
+					<th>Chofer</th>
+					<th>Unidad</th>
+					<th>Cliente</th>
+					<th>Costo</th>
+				</tr>
+			</thead>
+			<tbody>
+				<template x-for="f in fletes.filter(item => item.estatus === 'Pagado')">
+					<tr>
+						<td x-text="f.origen"></td>
+						<td x-text="f.destino"></td>
+						<td x-text="obtener_nombre_chofer(f.chofer)"></td>
+						<td x-text="obtener_info_unidad(f.unidad)"></td>
+						<td x-text="formato_dinero(f.tarifa)"></td>
+					</tr>
+				</template>
+			</tbody>
+		</table>
 </body>
 </html>
