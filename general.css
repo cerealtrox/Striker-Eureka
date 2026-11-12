@@ -9,3 +9,17 @@ input,select{
 	width: 100%;
 	box-sizing: border-box;
 }
+
+header nav {
+    display: flex;
+    gap: 10px; 
+    flex-wrap: wrap; 
+}
+
+.cuadro a {
+    border: 5px solid #030344;         
+    background: #030344;
+    color: #E7E7FE;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
