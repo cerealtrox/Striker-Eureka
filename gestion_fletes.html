@@ -1,24 +1,99 @@
-<!doctype html>
-<html lang="es">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Creación y gestión de fletes</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
-</head>
-<body>
-  <a href="./index.html">Volver al inicio</a>
-  <h1>Creación y gestión de fletes</h1>
-  <p id="mensaje" role="status"></p>
-  <h2>nuevo flete </h2>
-  <from id="from-flete">
-    <label for="cliente">cliente</label>
-    <select id="cliente" name="cliente_id" required></select>
+<section x-data="vistaFletes()" x-init="cargar('gestion')">
+  <h1>Gestion de fletes</h1>
 
-    <h2>nuevo flete</h2>
-    <from id="from-flete">
-      <label for="cliente">Cliente</label>
-      <selec id="cliente" name="cliente_id" required></selec>
+  <p x-show="cargando" role="status">Cargando...</p>
+  <p x-show="mensaje" x-text="mensaje" role="status"></p>
+  <p x-show="error" x-text="error" role="alert"></p>
 
-      
+  <h2>Nuevo flete</h2>
+
+  <form @submit.prevent="guardarFlete()">
+    <label for="cliente-flete">Cliente</label>
+    <select id="cliente-flete" x-model="formulario.cliente_id" required>
+      <option value="">Selecciona un cliente</option>
+      <template x-for="cliente in clientes" :key="cliente.id">
+        <option :value="cliente.id" x-text="cliente.nombre"></option>
+      </template>
+    </select>
+
+    <label for="chofer-flete">Chofer</label>
+    <select id="chofer-flete" x-model="formulario.chofer_id" required>
+      <option value="">Selecciona un chofer disponible</option>
+      <template x-for="chofer in choferes.filter(item => item.estatus === 'Disponible')" :key="chofer.id">
+        <option :value="chofer.id" x-text="chofer.nombre"></option>
+      </template>
+    </select>
+
+    <label for="unidad-flete">Unidad</label>
+    <select id="unidad-flete" x-model="formulario.unidad_id" required>
+      <option value="">Selecciona una unidad disponible</option>
+      <template x-for="unidad in unidades.filter(item => item.estatus === 'Disponible')" :key="unidad.id">
+        <option :value="unidad.id" x-text="unidad.placas"></option>
+      </template>
+    </select>
+
+    <label for="origen-flete">Origen</label>
+    <input id="origen-flete" x-model="formulario.origen" required>
+
+    <label for="destino-flete">Destino</label>
+    <input id="destino-flete" x-model="formulario.destino" required>
+
+    <label for="costo-flete">Costo</label>
+    <input id="costo-flete" type="number" min="0" step="0.01"
+           x-model="formulario.costo" required>
+
+    <button type="submit" :disabled="cargando || guardando">Guardar flete</button>
+  </form>
+
+  <h2>Fletes registrados</h2>
+  <p x-show="!cargando && !error && !fletes.length">No hay fletes registrados.</p>
+
+  <div x-show="fletes.length > 0" style="overflow-x: auto">
+    <table>
+      <thead>
+        <tr>
+          <th>Cliente</th>
+          <th>Chofer</th>
+          <th>Unidad</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Costo</th>
+          <th>Estado</th>
+          <th>Accion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <template x-for="flete in fletes" :key="flete.id">
+          <tr>
+            <td>
+              <a x-link :href="'/clientes/' + flete.cliente_id"
+                 x-text="flete.cliente_nombre"></a>
+            </td>
+            <td x-text="flete.chofer_nombre"></td>
+            <td x-text="flete.unidad_placas"></td>
+            <td x-text="flete.origen"></td>
+            <td x-text="flete.destino"></td>
+            <td x-text="'$' + Number(flete.costo).toFixed(2)"></td>
+            <td x-text="flete.estatus"></td>
+            <td>
+              <button type="button" x-show="flete.estatus === 'Pendiente'"
+                      :disabled="guardando || cargando"
+                      @click="cambiarEstado(flete.id, enTransito, 'gestion')">
+                Iniciar viaje
+              </button>
+              <button type="button" x-show="flete.estatus === enTransito"
+                      :disabled="guardando || cargando"
+                      @click="cambiarEstado(flete.id, 'Entregado', 'gestion')">
+                Marcar entregado
+              </button>
+              <a x-link href="/fletes-por-pagar" x-show="flete.estatus === 'Entregado'">
+                Ir a fletes por pagar
+              </a>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+  </div>
+</section>
     
