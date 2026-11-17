@@ -1,7 +1,7 @@
 // app.js
-document.addEventListener('alpine:init', () => {
-    Alpine.data('appData', () => ({
-        currentView: 'dashboard',
+function principal_fletes(){
+    alert("Hay")
+    return {
         stats: { total_clientes: 0 },
         
         // Estado de Catálogos
@@ -10,23 +10,14 @@ document.addEventListener('alpine:init', () => {
         unidades: [],
         
         // Formularios
-        formCliente: { nombre: '', telefono: '' },
-        formChofer: { nombre: '', licencia: '' },
+        formCliente: { nombre: '', telefono: '' ,apellido:''},
+        formChofer: { nombre: '', licencia: '', estatus: '' },
         formUnidad: { placas: '', modelo: '', capacidad: '' },
 
         init() {
             this.loadDashboardStats();
         },
 
-        // --- views ---
-        setView(view) {
-            this.currentView = view;
-            if(view === 'clientes') this.loadClientes();
-            if(view === 'flota') {
-                this.loadChoferes();
-                this.loadUnidades();
-            }
-        },
 
         async loadDashboardStats() {
             const res = await fetch('api.php?action=get_dashboard_stats');
@@ -58,9 +49,18 @@ document.addEventListener('alpine:init', () => {
                 method: 'POST',
                 body: JSON.stringify(this.formChofer)
             });
-            this.formChofer = { nombre: '', licencia: '' };
+            this.formChofer = { nombre: '', licencia: '', estatus: ''};
             this.loadChoferes();
         },
+        cancelar(vistaDestino) {
+            // Limpiamos los campos del formulario de choferes
+            this.nuevoChofer = {
+                nombre: '',
+                apellido: '',
+                licencia: '',
+                estado: 'Disponible'
+            };
+        }
 
         // --- Operaciones Unidades ---
         async loadUnidades() {
@@ -75,5 +75,5 @@ document.addEventListener('alpine:init', () => {
             this.formUnidad = { placas: '', modelo: '', capacidad: '' };
             this.loadUnidades();
         }
-    }));
-});
+    }
+}

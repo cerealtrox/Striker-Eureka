@@ -25,9 +25,10 @@ switch ($action) {
             while ($row = $result->fetchArray(SQLITE3_ASSOC)) { $choferes[] = $row; }
             echo json_encode($choferes);
         } elseif ($method === 'POST') {
-            $stmt = $db->prepare("INSERT INTO choferes (nombre, licencia) VALUES (:nombre, :licencia)");
+            $stmt = $db->prepare("INSERT INTO choferes (nombre, licencia, estatus) VALUES (:nombre, :licencia, :estatus)");
             $stmt->bindValue(':nombre', $input['nombre'], SQLITE3_TEXT);
             $stmt->bindValue(':licencia', $input['licencia'], SQLITE3_TEXT);
+            $stmt->bindValue(':estatus', $input['estatus'], SQLITE3_TEXT);
             $stmt->execute();
             echo json_encode(["status" => "success"]);
         }

@@ -1,34 +1,32 @@
 <section>
-    <h2>choferes</h2>
+    <h2>Choferes</h2>
 
     <div class="tabla">
         <table>
             <thead>
                 <tr>
-                    <th>clave</th>
-                    <th>nombre</th>
-                    <th>apellido</th>
-                    <th>estado</th>
-                    <th>licencia</th>
-                    <th>acciones</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Estado</th>
+                    <th>Licencia</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
-
             <tbody>
+                <!-- Corregido el x-for con la sintaxis limpia de Alpine -->
                 <template x-for="chofer in choferes" :key="chofer.clave">
                     <tr>
-                        <td x-text="chofer.clave"></td>
                         <td x-text="chofer.nombre"></td>
                         <td x-text="chofer.apellido"></td>
                         <td x-text="chofer.estado"></td>
                         <td x-text="chofer.licencia"></td>
                         <td>
                             <button @click="editar('choferes', chofer)">
-                                editar
+                                Editar
                             </button>
-
-                            <button @click="eliminar('choferes', chofer.clave)">
-                                eliminar
+                            <!-- Asegúrate de mandar el parámetro que tu función en app.js espere -->
+                            <button @click="c_borrar(chofer.clave)">
+                                Eliminar
                             </button>
                         </td>
                     </tr>
@@ -37,42 +35,40 @@
         </table>
     </div>
 
-    <p x-show="choferes.length == 0">no hay choferes registrados</p>
+    <!-- Mensaje condicional si no hay choferes -->
+    <p x-show="choferes.length === 0">No hay choferes registrados</p>
 
-    <h3 x-text="editando.choferes === null ? 'agregar chofer' : 'editar chofer'"></h3>
+    <!-- Título dinámico para el formulario -->
+    <h3 x-text="editando && editando.choferes === null ? 'Agregar Chofer' : 'Editar Chofer'"></h3>
 
-    <form class="formulario" @submit.prevent="guardar('choferes')">
+    <form class="formulario" @submit.prevent="guardar_chofer()">
         <label>
-            clave
-            <input
-                required
-                x-model.trim="nuevo_chofer.clave"
-                :disabled="editando.choferes !== null"
-            >
+            Nombre
+            <input required x-model.trim="formChofer.nombre">
         </label>
 
         <label>
-            nombre
-            <input required x-model.trim="nuevo_chofer.nombre">
+            Apellido
+            <input x-model.trim="formChofer.apellido">
         </label>
 
         <label>
-            apellido
-            <input x-model.trim="nuevo_chofer.apellido">
+            Licencia
+            <input x-model.trim="formChofer.licencia">
         </label>
 
         <label>
-            estado
-            <select x-model="nuevo_chofer.estado">
-                <option value="activo">activo</option>
-                <option value="inactivo">inactivo</option>
+            Estado
+            <select x-model="formChofer.estado">
+                <option value="activo">Activo</option>
+                <option value="inactivo">Inactivo</option>
             </select>
         </label>
 
-        <button type="submit" :disabled="guardando">guardar chofer</button>
+        <button type="submit" :disabled="guardando">Guardar Chofer</button>
 
         <button type="button" @click="cancelar('choferes')">
-            cancelar
+            Cancelar
         </button>
     </form>
 </section>
